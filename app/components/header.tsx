@@ -1,4 +1,4 @@
-import { Link } from "@remix-run/react";
+import { Form, Link } from "@remix-run/react";
 import { useOptionalUser } from "~/utils";
 
 export default function Header() {
@@ -9,7 +9,9 @@ export default function Header() {
       {user ? (
         <div className="flex w-11/12 justify-between">
           <div>Hi {user.email}</div>
-          <Link to="/logout">Logout</Link>
+          <Form action="/logout" method="post">
+            <button>Logout</button>
+          </Form>
         </div>
       ) : (
         <Link to="/login">Login</Link>

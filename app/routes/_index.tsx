@@ -1,108 +1,23 @@
-import type { LoaderArgs, ActionArgs } from "@remix-run/node";
-import { json, type V2_MetaFunction, redirect } from "@remix-run/node";
+import type { LoaderArgs, V2_MetaFunction } from "@remix-run/node";
+import { json } from "@remix-run/node";
 import { Form, Link, useLoaderData } from "@remix-run/react";
 import Fuse from "fuse.js";
-import { useState } from "react";
+import React, { useState } from "react";
 import { getUserSavedCrypto } from "~/models/save_crypto.server";
-import { requireUserId, getUserId } from "~/session.server";
+import { getUserId } from "~/session.server";
 import { useOptionalUser } from "~/utils";
-import { saveCrypto, unSaveCrypto } from "~/models/save_crypto.server";
-import React from "react";
+import { SaveStatus, type CryptoData } from "./save-crypto";
 
 export const meta: V2_MetaFunction = () => [{ title: "Remix Crypto App" }];
 
-enum SaveStatus {
-  SAVE = "SAVE",
-  UNSAVE = "UNSAVE",
-}
-
-type CryptoData = {
-  id: string;
-  rank?: number;
-  symbol?: string;
-  name: string;
-  supply?: number;
-  maxSupply?: number;
-  marketCapUsd?: number;
-  volumeUsd24Hr: number;
-  priceUsd: number;
-  changePercent24Hr: number;
-  vwap24Hr?: number;
-  explorer?: string;
-};
-
 type FuseResponse = {
   item: CryptoData;
-};
-
-const PropToType = {
-  id: "string",
-  rank: "number",
-  symbol: "string",
-  name: "string",
-  supply: "number",
-  maxSupply: "number",
-  marketCapUsd: "number",
-  volumeUsd24Hr: "number",
-  priceUsd: "number",
-  changePercent24Hr: "number",
-  vwap24Hr: "number",
-  explorer: "string",
-};
-
-export const action = async ({ request }: ActionArgs) => {
-  const userId = await requireUserId(request);
-
-  const formData = await request.formData();
-  const id = formData.get("id");
-  const priceUsd = formData.get("priceUsd");
-  const name = formData.get("name");
-  const volumeUsd24Hr = formData.get("volumeUsd24Hr");
-  const changePercent24Hr = formData.get("changePercent24Hr");
-  const saveStatus = formData.get("save_status");
-  const postData = {
-    id,
-    priceUsd,
-    name,
-    volumeUsd24Hr,
-    changePercent24Hr,
-    saveStatus,
-  };
-
-  let errors = null;
-  Object.keys(postData).forEach((key) => {
-    if (
-      !postData[key] ||
-      typeof postData[key] !== "string" ||
-      postData[key].length === 0
-    ) {
-      errors = { body: `${key} is required`, title: null };
-    }
-  });
-  if (errors) return json({ errors }, { status: 400 });
-
-  if (saveStatus === SaveStatus.SAVE) {
-    await saveCrypto({ ...typeCastData(postData), userId });
-    return redirect("/");
-  } else if (saveStatus === SaveStatus.UNSAVE) {
-    await unSaveCrypto({ id: postData.id, userId });
-  }
-  return redirect("/");
 };
 
 const getCryptoData = async () => {
   const apiResponse = await fetch("https://api.coincap.io/v2/assets");
   const apiData = await apiResponse.json();
   return apiData.data;
-};
-
-const typeCastData = (cryptoData: CryptoData) => {
-  const castedData: CryptoData = {} as CryptoData;
-  Object.keys(cryptoData).forEach((key) => {
-    castedData[key] =
-      PropToType[key] === "number" ? +cryptoData[key] : cryptoData[key];
-  });
-  return castedData;
 };
 
 export const loader = async ({ request }: LoaderArgs) => {
@@ -194,7 +109,7 @@ export default function Index() {
       </div>
 
       <dialog id="my_modal_1" className="modal">
-        <Form className="modal-box" method="post">
+        <Form className="modal-box" method="post" action="/save-crypto">
           <div className="stats stats-vertical w-full shadow">
             {Object.keys(selectedModal || {}).map(
               (key: string) =>

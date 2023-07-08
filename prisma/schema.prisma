@@ -14,8 +14,8 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  password Password?
-  notes    Note[]
+  password    Password?
+  savedCrypto SavedCrypto[]
 }
 
 model Password {
@@ -25,10 +25,13 @@ model Password {
   userId String @unique
 }
 
-model Note {
-  id    String @id @default(cuid())
-  title String
-  body  String
+model SavedCrypto {
+  uid               String @id @default(cuid())
+  id                String
+  priceUsd          Float
+  name              String
+  volumeUsd24Hr     Float
+  changePercent24Hr Float
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 const prisma = new PrismaClient();
 
 async function seed() {
-  const email = "rachel@remix.run";
+  const email = "test@test.run";
 
   // cleanup the existing database
   await prisma.user.delete({ where: { email } }).catch(() => {
@@ -24,18 +24,13 @@ async function seed() {
     },
   });
 
-  await prisma.note.create({
+  await prisma.savedCrypto.create({
     data: {
-      title: "My first note",
-      body: "Hello, world!",
-      userId: user.id,
-    },
-  });
-
-  await prisma.note.create({
-    data: {
-      title: "My second note",
-      body: "Hello, world!",
+      id: "bitcoin",
+      priceUsd: 30210.3009989213979407,
+      name: "Bitcoin",
+      volumeUsd24Hr: 7297874012.5084506392010394,
+      changePercent24Hr: 1.2065297066516024,
       userId: user.id,
     },
   });

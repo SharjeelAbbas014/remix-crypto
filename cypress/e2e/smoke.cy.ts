@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
 
 describe("smoke tests", () => {
-  it("should allow user to search crypto", () => {
+  it("should allow user to search crypto, save/unsave and login", () => {
     const loginForm = {
       email: `${faker.internet.userName()}@example.com`,
       password: faker.internet.password(),

@@ -9,17 +9,20 @@ import { useOptionalUser } from "~/utils";
 import { SaveStatus, type CryptoData } from "./save-crypto";
 
 export const meta: V2_MetaFunction = () => [{ title: "Remix Crypto App" }];
+const CRYPTO_API = "https://api.coincap.io/v2/assets";
 
 type FuseResponse = {
   item: CryptoData;
 };
 
 const getCryptoData = async () => {
-  const apiResponse = await fetch("https://api.coincap.io/v2/assets");
+  const apiResponse = await fetch(CRYPTO_API);
   const apiData = await apiResponse.json();
   return apiData.data;
 };
 
+// Remix loader which is most magical thing ever
+// We fetch user saved crypto and crypto data from the api
 export const loader = async ({ request }: LoaderArgs) => {
   const userId = await getUserId(request);
 
@@ -42,10 +45,12 @@ export default function Index() {
     [savedCrypto]
   );
 
+  // Fuse for fuzzy search on the keys id, symbol, and name
   const fuse = new Fuse(crypto_data, {
     keys: ["id", "symbol", "name"],
   });
 
+  // Fuse returns an array of objects with the key item
   const nomalizeFuseResponse = (fuseResponse: FuseResponse[]) => {
     return fuseResponse.map((crypto) => crypto.item);
   };

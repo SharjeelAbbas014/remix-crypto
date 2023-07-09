@@ -46,6 +46,8 @@ export type CryptoData = {
   vwap24Hr?: number;
   explorer?: string;
 };
+
+// This is the Remix action which is called when the form on / route is submitted to save or unsave a crypto
 export const action = async ({ request }: ActionArgs) => {
   const userId = await requireUserId(request);
 
@@ -66,6 +68,8 @@ export const action = async ({ request }: ActionArgs) => {
   };
 
   let errors = null;
+
+  // Check if all the required fields are present
   Object.keys(postData).forEach((key) => {
     if (
       !postData[key] ||
@@ -75,7 +79,11 @@ export const action = async ({ request }: ActionArgs) => {
       errors = { body: `${key} is required`, title: null };
     }
   });
+
   if (errors) return json({ errors }, { status: 400 });
+
+  // If the saveStatus is SAVE then we save the crypto
+  // If the saveStatus is UNSAVE then we unsave the crypto
 
   if (saveStatus === SaveStatus.SAVE) {
     await saveCrypto({ ...typeCastData(postData), userId });
@@ -83,5 +91,6 @@ export const action = async ({ request }: ActionArgs) => {
   } else if (saveStatus === SaveStatus.UNSAVE) {
     await unSaveCrypto({ id: postData.id, userId });
   }
+
   return redirect("/");
 };

@@ -58,6 +58,7 @@ export default function Index() {
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search here"
           className="input sticky top-0 z-10 w-full bg-cyan-950"
+          id="search"
         />
 
         <table className="table w-full">
@@ -89,7 +90,9 @@ export default function Index() {
                 <td>{crypto.priceUsd}</td>
                 {savedCryptoIds.length ? (
                   <td
-                    onClick={() => {
+                    id="save-status"
+                    onClick={(e) => {
+                      e.stopPropagation();
                       window.my_modal_1.showModal();
                       setSelectedModal(
                         () =>
@@ -147,6 +150,7 @@ export default function Index() {
                   <button
                     className="btn"
                     onClick={() => window.my_modal_1.close()}
+                    id="unsave_button"
                   >
                     Unsave
                   </button>
@@ -161,6 +165,7 @@ export default function Index() {
                   <button
                     className="btn"
                     onClick={() => window.my_modal_1.close()}
+                    id="save-button"
                   >
                     Save
                   </button>

@@ -14,7 +14,9 @@ export default function Header() {
           </Form>
         </div>
       ) : (
-        <Link to="/login">Login</Link>
+        <Link to="/login" id="login-button">
+          Login
+        </Link>
       )}
     </nav>
   );

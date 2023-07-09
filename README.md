@@ -35,8 +35,7 @@ Here's the flow the user will go through
 - User will be presented with the table of top 100 crypto
 - The user can search for the crypto he likes and click to see more details
 - The user can login and save the current details of the crypto
-- Another field should appear named `savedStatus`
-<img width="1388" alt="image" src="https://github.com/SharjeelAbbas014/remix-crypto/assets/53342674/28215e50-d2d6-40c2-ac54-c7a386107022">
+- Another field should appear named `savedStatus` <img width="1388" alt="image" src="https://github.com/SharjeelAbbas014/remix-crypto/assets/53342674/28215e50-d2d6-40c2-ac54-c7a386107022">
 - User can click on the ⭐️ icon to see saved details
 - User can also unsave saved crypto
 

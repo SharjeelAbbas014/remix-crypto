@@ -27,10 +27,10 @@ async function seed() {
   await prisma.savedCrypto.create({
     data: {
       id: "bitcoin",
-      priceUsd: 30210.3009989213979407,
+      priceUsd: 30210.3,
       name: "Bitcoin",
-      volumeUsd24Hr: 7297874012.5084506392010394,
-      changePercent24Hr: 1.2065297066516024,
+      volumeUsd24Hr: 7297874012.50845,
+      changePercent24Hr: 1.2064,
       userId: user.id,
     },
   });

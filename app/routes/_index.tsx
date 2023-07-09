@@ -52,12 +52,12 @@ export default function Index() {
 
   return (
     <main className="flex h-full items-center justify-center">
-      <div className="h-[75vh] w-10/12 overflow-scroll rounded-lg bg-slate-800 shadow-xl">
+      <div className="relative h-[75vh] w-10/12 overflow-scroll rounded-lg bg-slate-800 shadow-xl">
         <input
           type="text"
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search here"
-          className="input sticky top-0 z-10 w-full bg-cyan-950"
+          className="input sticky left-0 top-0 z-10 w-full bg-cyan-950"
           id="search"
         />
 

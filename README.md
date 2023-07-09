@@ -49,4 +49,7 @@ Here's the flow the user will go through
 - To post data we are using power of remix form and action to save data with prisma
 - Your mind should get blown (as mine did) by the fact that we don't re request the saved API or store them locally but loader just loades the data automagically. If that's not magic to you I don't know what is :P.
 
+### Demo:
+https://github.com/SharjeelAbbas014/remix-crypto/assets/53342674/39cc296a-e115-4de3-9c44-5bf3814d599c
+
 

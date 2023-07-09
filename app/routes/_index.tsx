@@ -82,8 +82,10 @@ export default function Index() {
             ).map((crypto) => (
               <tr
                 onClick={() => {
-                  window.my_modal_1.showModal();
-                  setSelectedModal(crypto);
+                  (
+                    document.getElementById("my_modal_2") as HTMLFormElement
+                  ).showModal();
+                  setSelectedModal(crypto as CryptoData);
                 }}
                 className="cursor-pointer"
                 key={crypto.id}
@@ -98,12 +100,14 @@ export default function Index() {
                     id="save-status"
                     onClick={(e) => {
                       e.stopPropagation();
-                      window.my_modal_1.showModal();
+                      (
+                        document.getElementById("my_modal_1") as HTMLFormElement
+                      ).showModal();
                       setSelectedModal(
                         () =>
-                          savedCrypto.find(
+                          (savedCrypto.find(
                             (savedCrypto) => savedCrypto.id === crypto.id
-                          ) ?? null
+                          ) as CryptoData) ?? null
                       );
                     }}
                   >
@@ -121,18 +125,18 @@ export default function Index() {
           <div className="stats stats-vertical w-full shadow">
             {Object.keys(selectedModal || {}).map(
               (key: string) =>
-                selectedModal[key] && (
+                selectedModal?.[key as keyof CryptoData] && (
                   <>
                     <div className="stat">
                       <div className="stat-title">{key.toUpperCase()}</div>
                       <div className="stat-value text-sm text-secondary">
-                        {selectedModal[key]}
+                        {selectedModal?.[key as keyof CryptoData]}
                       </div>
                     </div>
                     <input
                       type="hidden"
                       name={key}
-                      value={selectedModal[key]}
+                      value={selectedModal?.[key as keyof CryptoData]}
                     />
                   </>
                 )
@@ -143,7 +147,9 @@ export default function Index() {
               className="btn-ghost btn-sm btn-circle btn absolute right-2 top-2"
               onClick={(e) => {
                 e.preventDefault();
-                window.my_modal_1.close();
+                (
+                  document.getElementById("my_modal_1") as HTMLFormElement
+                ).close();
               }}
             >
               ✕
@@ -154,7 +160,11 @@ export default function Index() {
                 <>
                   <button
                     className="btn"
-                    onClick={() => window.my_modal_1.close()}
+                    onClick={() =>
+                      (
+                        document.getElementById("my_modal_1") as HTMLFormElement
+                      ).close()
+                    }
                     id="unsave_button"
                   >
                     Unsave
@@ -169,7 +179,11 @@ export default function Index() {
                 <>
                   <button
                     className="btn"
-                    onClick={() => window.my_modal_1.close()}
+                    onClick={() =>
+                      (
+                        document.getElementById("my_modal_1") as HTMLFormElement
+                      ).close()
+                    }
                     id="save-button"
                   >
                     Save

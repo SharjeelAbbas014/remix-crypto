@@ -83,7 +83,7 @@ export default function Index() {
               <tr
                 onClick={() => {
                   (
-                    document.getElementById("my_modal_2") as HTMLFormElement
+                    document.getElementById("my_modal_1") as HTMLFormElement
                   ).showModal();
                   setSelectedModal(crypto as CryptoData);
                 }}

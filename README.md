@@ -1,4 +1,4 @@
-*Remix Crypto*, an app built to view current prices of crypto and allow users to save the current prices of the cryptos.
+*[Remix Crypto](https://remixcrypto-2846.fly.dev/)*, an app built to view current prices of crypto and allow users to save the current prices of the cryptos.
 
 ### Technology Used:
 - [Remix](https://remix.run/)
